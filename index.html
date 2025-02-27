@@ -73,10 +73,13 @@
             box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
         }
         #music-container {
-            display: none; /* Hide the Vocaroo player */
-            width: 0;
-            height: 0;
-            overflow: hidden;
+            display: none; /* Hidden initially */
+            margin-top: -10px; /* Move it closer to the image */
+        }
+        iframe {
+            width: 300px;
+            height: 60px;
+            border: none;
         }
     </style>
 </head>
@@ -91,11 +94,9 @@
 
     <div id="image-container">
         <img id="birthday-image" src="https://i.ibb.co/cK0zJhYZ/IMG-20250227-183038.jpg" alt="Birthday Image">
-    </div>
-
-    <!-- Hidden Vocaroo Audio -->
-    <div id="music-container">
-        <iframe id="vocaroo-player" src="https://vocaroo.com/embed/16LR1Ax4ZNL2" frameborder="0"></iframe>
+        <div id="music-container">
+            <iframe id="vocaroo-player" src="https://vocaroo.com/embed/16LR1Ax4ZNL2" frameborder="0"></iframe>
+        </div>
     </div>
 
     <script>
@@ -128,7 +129,6 @@
 
             let imageContainer = document.getElementById("image-container");
             let musicContainer = document.getElementById("music-container");
-            let vocarooPlayer = document.getElementById("vocaroo-player");
 
             imageContainer.style.display = "block";
             musicContainer.style.display = "block";
@@ -137,9 +137,6 @@
                 imageContainer.style.opacity = "1";
                 musicContainer.style.opacity = "1";
             }, 500);
-
-            // Play Vocaroo song by reloading the iframe (simulating autoplay)
-            vocarooPlayer.src = "https://vocaroo.com/embed/16LR1Ax4ZNL2?autoplay=1";
         }
     </script>
 
