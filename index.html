@@ -74,6 +74,9 @@
         }
         #music-container {
             display: none; /* Hide the player */
+            width: 0;
+            height: 0;
+            overflow: hidden;
         }
     </style>
 </head>
@@ -92,9 +95,7 @@
 
     <!-- Hidden Vocaroo Audio -->
     <div id="music-container">
-        <audio id="audio-player" preload="auto">
-            <source src="https://vocaroo.com/embed/16LR1Ax4ZNL2" type="audio/mpeg">
-        </audio>
+        <iframe src="https://vocaroo.com/embed/16LR1Ax4ZNL2?autoplay=1" frameborder="0"></iframe>
     </div>
 
     <script>
@@ -126,38 +127,14 @@
             document.querySelector(".btn-container").style.display = "none";
 
             let imageContainer = document.getElementById("image-container");
-            let audio = document.getElementById("audio-player");
+            let musicContainer = document.getElementById("music-container");
 
             imageContainer.style.display = "block";
+            musicContainer.style.display = "block";
 
             setTimeout(() => {
                 imageContainer.style.opacity = "1";
-
-                // Play MP3 file from 0:40 to 1:00 with fade-in effect
-                audio.currentTime = 40; // Start at 40 seconds
-                audio.volume = 0;
-                audio.play();
-
-                let fadeInterval = setInterval(() => {
-                    if (audio.volume < 1.0) {
-                        audio.volume += 0.1;
-                    } else {
-                        clearInterval(fadeInterval);
-                    }
-                }, 300); // Gradually increase volume every 300ms
-
-                // Stop at 1:00 (20 seconds later)
-                setTimeout(() => {
-                    let fadeOutInterval = setInterval(() => {
-                        if (audio.volume > 0.0) {
-                            audio.volume -= 0.1;
-                        } else {
-                            clearInterval(fadeOutInterval);
-                            audio.pause();
-                        }
-                    }, 300);
-                }, 20000);
-
+                musicContainer.style.opacity = "1";
             }, 500);
         }
     </script>
