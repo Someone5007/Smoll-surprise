@@ -67,13 +67,16 @@
             transition: opacity 2s ease-in-out;
         }
         img {
-            width: 80%; /* Larger image */
+            width: 90%; /* Large image */
+            max-width: 900px; /* Keeps it from getting too large on big screens */
             border-radius: 15px;
             box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
         }
-        #audio-player {
+        #music-container {
+            display: none;
+            margin-top: 20px;
             opacity: 0;
-            transition: opacity 3s ease-in-out;
+            transition: opacity 2s ease-in-out;
         }
     </style>
 </head>
@@ -90,10 +93,9 @@
         <img id="birthday-image" src="https://i.ibb.co/cK0zJhYZ/IMG-20250227-183038.jpg" alt="Birthday Image">
     </div>
 
-    <!-- Hidden Audio Player -->
-    <audio id="audio-player" preload="auto">
-        <source src="https://drive.google.com/uc?export=download&id=1jIs9q-qgw8jAnnEFLyLJPp3daWcKlGr2" type="audio/mpeg">
-    </audio>
+    <div id="music-container">
+        <iframe width="300" height="60" src="https://vocaroo.com/embed/16LR1Ax4ZNL2?autoplay=1" frameborder="0" allow="autoplay"></iframe>
+    </div>
 
     <script>
         let questions = [
@@ -109,53 +111,30 @@
                 document.getElementById("question").innerText = questions[index];
                 index++;
             } else if (index === questions.length - 1) {
-                // Change buttons to "Show Me"
+                // Change both buttons to one "Show Me" button
                 document.getElementById("question").innerText = questions[index];
-                document.querySelector(".btn-yes").innerText = "Show Me";
-                document.querySelector(".btn-no").innerText = "Show Me";
-                document.querySelector(".btn-yes").classList.remove("btn-yes");
-                document.querySelector(".btn-no").classList.remove("btn-no");
-                document.querySelector(".btn-container").querySelectorAll(".btn").forEach(btn => btn.classList.add("btn-show"));
+
+                let btnContainer = document.querySelector(".btn-container");
+                btnContainer.innerHTML = '<button class="btn btn-show" onclick="showImage()">Show Me</button>';
+
                 index++;
-            } else {
-                document.getElementById("question").style.display = "none";
-                document.querySelector(".btn-container").style.display = "none";
-
-                let imageContainer = document.getElementById("image-container");
-                let audio = document.getElementById("audio-player");
-
-                imageContainer.style.display = "block";
-
-                setTimeout(() => {
-                    imageContainer.style.opacity = "1";
-
-                    // Play MP3 file from 0:40 to 1:00 with fade-in effect
-                    audio.currentTime = 40; // Start at 40 seconds
-                    audio.volume = 0;
-                    audio.play();
-
-                    let fadeInterval = setInterval(() => {
-                        if (audio.volume < 1.0) {
-                            audio.volume += 0.1;
-                        } else {
-                            clearInterval(fadeInterval);
-                        }
-                    }, 300); // Gradually increase volume every 300ms
-
-                    // Stop at 1:00 (20 seconds later)
-                    setTimeout(() => {
-                        let fadeOutInterval = setInterval(() => {
-                            if (audio.volume > 0.0) {
-                                audio.volume -= 0.1;
-                            } else {
-                                clearInterval(fadeOutInterval);
-                                audio.pause();
-                            }
-                        }, 300);
-                    }, 20000);
-
-                }, 500);
             }
+        }
+
+        function showImage() {
+            document.getElementById("question").style.display = "none";
+            document.querySelector(".btn-container").style.display = "none";
+
+            let imageContainer = document.getElementById("image-container");
+            let musicContainer = document.getElementById("music-container");
+
+            imageContainer.style.display = "block";
+            musicContainer.style.display = "block";
+
+            setTimeout(() => {
+                imageContainer.style.opacity = "1";
+                musicContainer.style.opacity = "1";
+            }, 500);
         }
     </script>
 
