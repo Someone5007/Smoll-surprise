@@ -86,12 +86,12 @@
     </div>
 
     <div id="image-container">
-        <img id="birthday-image" src="https://i.ibb.co/5XbvNQBN/Screenshot-2025-02-27-18-55-53-730-com-android-chrome.jpg" alt="Birthday Image">
+        <img id="birthday-image" src="https://i.ibb.co/cK0zJhYZ/IMG-20250227-183038.jpg" alt="Birthday Image">
     </div>
 
     <!-- Hidden Audio Player -->
     <audio id="audio-player" preload="auto">
-        <source src="/mnt/data/BIRDS OF A FEATHER_Billie Eilish.mp3#t=40,60" type="audio/mpeg">
+        <source src="/mnt/data/BIRDS OF A FEATHER_Billie Eilish.mp3" type="audio/mpeg">
     </audio>
 
     <script>
@@ -126,9 +126,16 @@
                 setTimeout(() => {
                     imageContainer.style.opacity = "1";
 
-                    // Play MP3 file
+                    // Play MP3 file from 0:40 to 1:00
                     let audio = document.getElementById("audio-player");
+                    audio.currentTime = 40; // Start at 40 seconds
                     audio.play();
+
+                    // Stop at 1:00 (20 seconds later)
+                    setTimeout(() => {
+                        audio.pause();
+                    }, 20000); 
+
                 }, 500);
             }
         }
