@@ -72,8 +72,15 @@
             border-radius: 15px;
             box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
         }
-        #audio-player {
+        #music-container {
             display: none;
+            margin-top: 20px;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+        }
+        iframe {
+            width: 300px;
+            height: 60px;
         }
     </style>
 </head>
@@ -90,10 +97,9 @@
         <img id="birthday-image" src="https://i.ibb.co/cK0zJhYZ/IMG-20250227-183038.jpg" alt="Birthday Image">
     </div>
 
-    <!-- Hidden Audio Player -->
-    <audio id="audio-player" preload="auto">
-        <source src="https://drive.google.com/uc?export=download&id=1jIs9q-qgw8jAnnEFLyLJPp3daWcKlGr2" type="audio/mpeg">
-    </audio>
+    <div id="music-container">
+        <iframe src="https://vocaroo.com/embed/16LR1Ax4ZNL2?autoplay=1" frameborder="0" allow="autoplay"></iframe>
+    </div>
 
     <script>
         let questions = [
@@ -124,38 +130,14 @@
             document.querySelector(".btn-container").style.display = "none";
 
             let imageContainer = document.getElementById("image-container");
-            let audio = document.getElementById("audio-player");
+            let musicContainer = document.getElementById("music-container");
 
             imageContainer.style.display = "block";
+            musicContainer.style.display = "block";
 
             setTimeout(() => {
                 imageContainer.style.opacity = "1";
-
-                // Play MP3 file from 0:40 to 1:00 with fade-in effect
-                audio.currentTime = 40; // Start at 40 seconds
-                audio.volume = 0;
-                audio.play();
-
-                let fadeInterval = setInterval(() => {
-                    if (audio.volume < 1.0) {
-                        audio.volume += 0.1;
-                    } else {
-                        clearInterval(fadeInterval);
-                    }
-                }, 300); // Gradually increase volume every 300ms
-
-                // Stop at 1:00 (20 seconds later)
-                setTimeout(() => {
-                    let fadeOutInterval = setInterval(() => {
-                        if (audio.volume > 0.0) {
-                            audio.volume -= 0.1;
-                        } else {
-                            clearInterval(fadeOutInterval);
-                            audio.pause();
-                        }
-                    }, 300);
-                }, 20000);
-
+                musicContainer.style.opacity = "1";
             }, 500);
         }
     </script>
