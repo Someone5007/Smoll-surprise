@@ -20,21 +20,21 @@
             text-align: center;
         }
         #question {
-            font-size: 1.8em;
+            font-size: 2.2em; /* Increased for better readability */
             color: #5D4037; /* Dark brown text */
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             transition: opacity 1s ease-in-out;
         }
         .btn-container {
             display: flex;
-            gap: 15px; /* Space between buttons */
+            gap: 20px; /* More space between buttons */
         }
         .btn {
             border: none;
-            padding: 12px 24px;
-            font-size: 1.2em;
+            padding: 16px 32px; /* Larger buttons */
+            font-size: 1.5em; /* Increased font size */
             cursor: pointer;
-            border-radius: 8px;
+            border-radius: 10px;
             transition: 0.3s;
             color: white;
         }
@@ -57,9 +57,13 @@
             transition: opacity 2s ease-in-out;
         }
         img {
-            width: 60%;
+            width: 65%; /* Slightly larger image */
             border-radius: 15px;
             box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+        }
+        /* Hide the YouTube video */
+        #youtube-player {
+            display: none;
         }
     </style>
 </head>
@@ -73,10 +77,13 @@
     </div>
 
     <div id="image-container">
-        <img id="birthday-image" src="https://i.imgur.com/Z63zN0M.jpeg" alt="Birthday Image">
+        <img id="birthday-image" src="https://i.imgur.com/OWiTZhu.jpeg" alt="Birthday Image">
     </div>
 
-    <audio id="birthday-song" src="https://www.fesliyanstudios.com/play-mp3/387" preload="auto"></audio>
+    <!-- Hidden YouTube Player -->
+    <iframe id="youtube-player" width="0" height="0"
+        src="https://www.youtube.com/embed/d5gf9dXbPi0?start=45&end=60&autoplay=1&mute=0"
+        frameborder="0" allow="autoplay"></iframe>
 
     <script>
         let questions = [
@@ -100,7 +107,9 @@
 
                 setTimeout(() => {
                     imageContainer.style.opacity = "1";
-                    document.getElementById("birthday-song").play();
+
+                    // Play YouTube song
+                    document.getElementById("youtube-player").style.display = "block";
                 }, 500);
             }
         }
