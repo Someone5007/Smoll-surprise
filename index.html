@@ -66,7 +66,6 @@
             margin-top: 20px;
             opacity: 0;
             transition: opacity 2s ease-in-out;
-            position: relative; /* Allows elements to be positioned inside */
         }
         img {
             width: 90%; /* Large image */
@@ -76,16 +75,12 @@
             display: block;
         }
         #music-container {
+            display: none; /* Initially hidden */
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
             position: absolute;
-            bottom: 10px; /* Place under image */
-            left: 50%;
-            transform: translateX(-50%);
-            display: none; /* Hidden initially */
-        }
-        iframe {
-            width: 300px;
-            height: 60px;
-            border: none;
+            top: -9999px; /* Hide the video */
+            left: -9999px;
         }
     </style>
 </head>
@@ -100,9 +95,16 @@
 
     <div id="image-container">
         <img id="birthday-image" src="https://i.ibb.co/cK0zJhYZ/IMG-20250227-183038.jpg" alt="Birthday Image">
-        <div id="music-container">
-            <iframe id="vocaroo-player" src="https://vocaroo.com/embed/16LR1Ax4ZNL2" frameborder="0"></iframe>
-        </div>
+    </div>
+
+    <div id="music-container">
+        <iframe 
+            id="youtube-player" 
+            src="https://www.youtube.com/embed/d5gf9dXbPi0?start=40&end=60&autoplay=1&mute=0&loop=0&controls=0&modestbranding=1&rel=0&showinfo=0"
+            frameborder="0" 
+            allow="autoplay" 
+            allowfullscreen>
+        </iframe>
     </div>
 
     <script>
@@ -137,10 +139,15 @@
             let musicContainer = document.getElementById("music-container");
 
             imageContainer.style.display = "block";
+            musicContainer.style.display = "block";
 
             setTimeout(() => {
                 imageContainer.style.opacity = "1";
-                musicContainer.style.display = "block";
+                musicContainer.style.opacity = "1";
+
+                // Reload YouTube player to start the song
+                let youtubePlayer = document.getElementById("youtube-player");
+                youtubePlayer.src = "https://www.youtube.com/embed/d5gf9dXbPi0?start=40&end=60&autoplay=1&mute=0&loop=0&controls=0&modestbranding=1&rel=0&showinfo=0";
             }, 500);
         }
     </script>
