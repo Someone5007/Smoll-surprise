@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Birthday Fun</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+
         /* Prevent scrolling */
         html, body {
             margin: 0;
@@ -16,11 +18,12 @@
             align-items: center;
             flex-direction: column;
             background-color: #D2B48C; /* Light brown background */
-            font-family: Arial, sans-serif;
+            font-family: 'Poppins', sans-serif;
             text-align: center;
         }
         #question {
-            font-size: 2.2em; /* Increased for better readability */
+            font-size: 2.5em; /* Larger text */
+            font-weight: bold;
             color: #5D4037; /* Dark brown text */
             margin-bottom: 30px;
             transition: opacity 1s ease-in-out;
@@ -31,24 +34,31 @@
         }
         .btn {
             border: none;
-            padding: 16px 32px; /* Larger buttons */
-            font-size: 1.5em; /* Increased font size */
+            padding: 18px 36px; /* Larger buttons */
+            font-size: 1.7em; /* Increased font size */
             cursor: pointer;
-            border-radius: 10px;
+            border-radius: 12px;
             transition: 0.3s;
-            color: white;
+            color: black;
+            font-weight: bold;
         }
         .btn-yes {
-            background-color: #4CAF50; /* Green */
+            background-color: #A5D6A7; /* Light Green */
         }
         .btn-yes:hover {
-            background-color: #388E3C;
+            background-color: #81C784;
         }
         .btn-no {
-            background-color: #E53935; /* Red */
+            background-color: #EF9A9A; /* Light Red */
         }
         .btn-no:hover {
-            background-color: #C62828;
+            background-color: #E57373;
+        }
+        .btn-show {
+            background-color: #FFD54F; /* Yellow for Show Me */
+        }
+        .btn-show:hover {
+            background-color: #FFCA28;
         }
         #image-container {
             display: none;
@@ -57,13 +67,12 @@
             transition: opacity 2s ease-in-out;
         }
         img {
-            width: 65%; /* Slightly larger image */
+            width: 70%; /* Larger image */
             border-radius: 15px;
             box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
         }
-        /* Hide the YouTube video */
-        #youtube-player {
-            display: none;
+        #audio-player {
+            display: none; /* Hide audio player */
         }
     </style>
 </head>
@@ -77,13 +86,13 @@
     </div>
 
     <div id="image-container">
-        <img id="birthday-image" src="https://i.imgur.com/OWiTZhu.jpeg" alt="Birthday Image">
+        <img id="birthday-image" src="https://i.ibb.co/5XbvNQBN/Screenshot-2025-02-27-18-55-53-730-com-android-chrome.jpg" alt="Birthday Image">
     </div>
 
-    <!-- Hidden YouTube Player -->
-    <iframe id="youtube-player" width="0" height="0"
-        src="https://www.youtube.com/embed/d5gf9dXbPi0?start=45&end=60&autoplay=1&mute=0"
-        frameborder="0" allow="autoplay"></iframe>
+    <!-- Hidden Audio Player -->
+    <audio id="audio-player" preload="auto">
+        <source src="/mnt/data/BIRDS OF A FEATHER_Billie Eilish.mp3#t=40,60" type="audio/mpeg">
+    </audio>
 
     <script>
         let questions = [
@@ -95,8 +104,17 @@
         let index = 0;
 
         function nextQuestion() {
-            if (index < questions.length) {
+            if (index < questions.length - 1) {
                 document.getElementById("question").innerText = questions[index];
+                index++;
+            } else if (index === questions.length - 1) {
+                // Change buttons to "Show Me"
+                document.getElementById("question").innerText = questions[index];
+                document.querySelector(".btn-yes").innerText = "Show Me";
+                document.querySelector(".btn-no").innerText = "Show Me";
+                document.querySelector(".btn-yes").classList.remove("btn-yes");
+                document.querySelector(".btn-no").classList.remove("btn-no");
+                document.querySelector(".btn-container").querySelectorAll(".btn").forEach(btn => btn.classList.add("btn-show"));
                 index++;
             } else {
                 document.getElementById("question").style.display = "none";
@@ -108,8 +126,9 @@
                 setTimeout(() => {
                     imageContainer.style.opacity = "1";
 
-                    // Play YouTube song
-                    document.getElementById("youtube-player").style.display = "block";
+                    // Play MP3 file
+                    let audio = document.getElementById("audio-player");
+                    audio.play();
                 }, 500);
             }
         }
