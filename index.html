@@ -2,84 +2,103 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Result Celebration</title>
+  <title>Result Popup Celebration</title>
   <style>
     :root {
-      --pink-light: #f88195;
-      --pink-medium: #f67280;
-      --pink-dark: #c06c84;
-      --purple: #6c5b7b;
-      --blue-dark: #355c7d;
+      --color1: #f88195;
+      --color2: #f67280;
+      --color3: #c06c84;
+      --color4: #6c5b7b;
+      --color5: #355c7d;
     }body {
   margin: 0;
   height: 100vh;
-  background: linear-gradient(to bottom, var(--pink-light), var(--blue-dark));
+  background: linear-gradient(to bottom, var(--color1), var(--color5));
+  font-family: 'Segoe UI', sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Segoe UI', sans-serif;
   overflow: hidden;
 }
 
-.popup {
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
+.popup, .countdown-box, .cake-box, .congrats-box {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
   border-radius: 20px;
   padding: 30px;
   text-align: center;
   color: white;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  transition: all 0.5s ease;
 }
 
-.popup h1 {
-  margin-bottom: 20px;
-}
-
-.button-container button {
+button {
   margin: 10px;
   padding: 10px 20px;
   border: none;
   border-radius: 8px;
   font-size: 16px;
   cursor: pointer;
-  background: var(--pink-dark);
+  background: var(--color3);
   color: white;
-  transition: all 0.3s ease;
+  transition: background 0.3s ease;
 }
 
-.button-container button:hover {
-  background: var(--purple);
+button:hover {
+  background: var(--color4);
+}
+
+.countdown-box, .cake-box, .congrats-box {
+  display: none;
 }
 
 .countdown {
-  font-size: 40px;
-  display: none;
-}
-
-.cake, .congrats, .ribbons {
-  display: none;
-  text-align: center;
-  animation: fadeIn 1s ease forwards;
+  font-size: 48px;
+  font-weight: bold;
 }
 
 .cake {
-  font-size: 50px;
-  margin: 20px 0;
+  width: 100px;
+  height: 120px;
+  margin: 20px auto;
+  background: var(--color3);
+  border-radius: 10px 10px 0 0;
+  position: relative;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+.cake::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 20px;
+  background: var(--color2);
+  border-radius: 50%;
+}
+
+.cake::after {
+  content: '';
+  position: absolute;
+  top: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 15px;
+  background: white;
 }
 
 .ribbons {
+  display: none;
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   pointer-events: none;
-  background-image: repeating-linear-gradient(45deg, var(--pink-light), var(--pink-medium) 10px, transparent 10px, transparent 20px);
+  background-image: repeating-linear-gradient(45deg, var(--color1), var(--color2) 10px, transparent 10px, transparent 20px);
   animation: fall 1s ease-in-out infinite;
   mix-blend-mode: screen;
 }
@@ -91,26 +110,20 @@
 
   </style>
 </head>
-<body>
-  <div class="popup" id="popup">
+<body>  <div class="popup" id="popup">
     <h1>You got your results!</h1>
-    <div class="button-container">
-      <button onclick="startCelebration()">Yes</button>
-      <button id="noBtn" onmouseover="forceYes()">No</button>
-    </div>
-  </div>  <div class="countdown" id="countdown">0%</div>
-  <div class="cake" id="cake"> 
-    <span> 
-      🎂 
-    </span>
-  </div>
-  <div class="congrats" id="congrats">
+    <button onclick="startCelebration()">Yes</button>
+    <button id="noBtn" onmouseover="forceYes()">No</button>
+  </div>  <div class="countdown-box" id="countdownBox">
+    <div class="countdown" id="countdown">0%</div>
+  </div>  <div class="cake-box" id="cakeBox">
+    <div class="cake"></div>
+  </div>  <div class="congrats-box" id="congratsBox">
     <h2>Congrats!</h2>
-    <p>I believe you</p>
-    <p>I'm proud of you</p>
-    <p>I love you</p>
-  </div>
-  <div class="ribbons" id="ribbons"></div>  <script>
+    <p>I believe you.</p>
+    <p>I'm proud of you.</p>
+    <p>I love you.</p>
+  </div>  <div class="ribbons" id="ribbons"></div>  <script>
     function forceYes() {
       const noBtn = document.getElementById('noBtn');
       noBtn.style.position = 'absolute';
@@ -120,8 +133,9 @@
 
     function startCelebration() {
       document.getElementById('popup').style.display = 'none';
+      const countdownBox = document.getElementById('countdownBox');
       const countdown = document.getElementById('countdown');
-      countdown.style.display = 'block';
+      countdownBox.style.display = 'block';
 
       let value = 0;
       const interval = setInterval(() => {
@@ -137,10 +151,10 @@
 
     function showFinal() {
       setTimeout(() => {
-        document.getElementById('countdown').style.display = 'none';
-        document.getElementById('cake').style.display = 'block';
+        document.getElementById('countdownBox').style.display = 'none';
+        document.getElementById('cakeBox').style.display = 'block';
         setTimeout(() => {
-          document.getElementById('congrats').style.display = 'block';
+          document.getElementById('congratsBox').style.display = 'block';
           document.getElementById('ribbons').style.display = 'block';
         }, 1500);
       }, 1000);
