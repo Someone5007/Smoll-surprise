@@ -1,163 +1,145 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
+  <title>Good Morning, Friend!</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Result Popup Celebration</title>
   <style>
-    :root {
-      --color1: #f88195;
-      --color2: #f67280;
-      --color3: #c06c84;
-      --color4: #6c5b7b;
-      --color5: #355c7d;
-    }body {
-  margin: 0;
-  height: 100vh;
-  background: linear-gradient(to bottom, var(--color1), var(--color5));
-  font-family: 'Segoe UI', sans-serif;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-.popup, .countdown-box, .cake-box, .congrats-box {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(12px);
-  border-radius: 20px;
-  padding: 30px;
-  text-align: center;
-  color: white;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-  position: absolute;
-  transition: all 0.5s ease;
-}
-
-button {
-  margin: 10px;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  cursor: pointer;
-  background: var(--color3);
-  color: white;
-  transition: background 0.3s ease;
-}
-
-button:hover {
-  background: var(--color4);
-}
-
-.countdown-box, .cake-box, .congrats-box {
-  display: none;
-}
-
-.countdown {
-  font-size: 48px;
-  font-weight: bold;
-}
-
-.cake {
-  width: 100px;
-  height: 120px;
-  margin: 20px auto;
-  background: var(--color3);
-  border-radius: 10px 10px 0 0;
-  position: relative;
-}
-
-.cake::before {
-  content: '';
-  position: absolute;
-  top: -20px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 10px;
-  height: 20px;
-  background: var(--color2);
-  border-radius: 50%;
-}
-
-.cake::after {
-  content: '';
-  position: absolute;
-  top: -35px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 2px;
-  height: 15px;
-  background: white;
-}
-
-.ribbons {
-  display: none;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  background-image: repeating-linear-gradient(45deg, var(--color1), var(--color2) 10px, transparent 10px, transparent 20px);
-  animation: fall 1s ease-in-out infinite;
-  mix-blend-mode: screen;
-}
-
-@keyframes fall {
-  0% { background-position: 0 0; }
-  100% { background-position: 0 20px; }
-}
-
+    body {
+      background: linear-gradient(135deg, #ffb6c1 0%, #ffe4e1 100%);
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      color: #d72660;
+      text-align: center;
+      padding: 10vw 0 0 0;
+      margin: 0;
+      min-height: 100vh;
+      box-sizing: border-box;
+    }
+    .container {
+      background: #fff0f6;
+      border-radius: 20px;
+      box-shadow: 0 4px 16px #f8bbd0;
+      display: inline-block;
+      padding: 8vw 6vw;
+      margin-top: 4vw;
+      max-width: 95vw;
+      width: 95vw;
+      box-sizing: border-box;
+    }
+    h1 {
+      font-size: 2em;
+      margin-bottom: 10px;
+      color: #ff69b4;
+      word-break: break-word;
+    }
+    .question {
+      margin: 8vw 0 6vw 0;
+      font-size: 1.1em;
+      word-break: break-word;
+    }
+    .btn-group {
+      margin: 4vw 0 0 0;
+      display: flex;
+      justify-content: center;
+      gap: 4vw;
+    }
+    button {
+      background: #ff69b4;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 3vw 8vw;
+      font-size: 1em;
+      margin: 0;
+      cursor: pointer;
+      transition: background 0.2s;
+      box-shadow: 0 2px 8px #f8bbd0;
+    }
+    button:active {
+      background: #d72660;
+    }
+    #love-percentage {
+      font-size: 1.5em;
+      margin-top: 8vw;
+      color: #d72660;
+      display: none;
+      word-break: break-word;
+    }
+    .heart {
+      color: #ff69b4;
+      font-size: 1.5em;
+      vertical-align: middle;
+      margin: 0 2vw;
+    }
+    @media (max-width: 500px) {
+      .container {
+        padding: 8vw 2vw;
+        width: 98vw;
+        max-width: 98vw;
+      }
+      h1 {
+        font-size: 1.3em;
+      }
+      .question {
+        font-size: 1em;
+      }
+      button {
+        font-size: 0.95em;
+        padding: 3vw 6vw;
+      }
+      #love-percentage {
+        font-size: 1.1em;
+      }
+    }
   </style>
 </head>
-<body>  <div class="popup" id="popup">
-    <h1>You got your results!</h1>
-    <button onclick="startCelebration()">Yes</button>
-    <button id="noBtn" onmouseover="forceYes()">No</button>
-  </div>  <div class="countdown-box" id="countdownBox">
-    <div class="countdown" id="countdown">0%</div>
-  </div>  <div class="cake-box" id="cakeBox">
-    <div class="cake"></div>
-  </div>  <div class="congrats-box" id="congratsBox">
-    <h2>Congrats!</h2>
-    <p>I believe you.</p>
-    <p>I'm proud of you.</p>
-    <p>I love you.</p>
-  </div>  <div class="ribbons" id="ribbons"></div>  <script>
-    function forceYes() {
-      const noBtn = document.getElementById('noBtn');
-      noBtn.style.position = 'absolute';
-      noBtn.style.top = Math.random() * 80 + '%';
-      noBtn.style.left = Math.random() * 80 + '%';
+<body>
+  <div class="container">
+    <h1>🌸 Good Morning, Darlin! 🌸</h1>
+    <div id="questions">
+      <div class="question" id="q1">
+        Aram se soyi naa? <span class="heart">😴</span>
+        <div class="btn-group">
+          <button onclick="nextQuestion(true)">Yes</button>
+          <button onclick="nextQuestion(false)">No</button>
+        </div>
+      </div>
+      <div class="question" id="q2" style="display:none;">
+        Sapne me main aya tha kya? <span class="heart">🙄</span>
+        <div class="btn-group">
+          <button onclick="nextQuestion(true)">Yes</button>
+          <button onclick="nextQuestion(false)">No</button>
+        </div>
+      </div>
+      <div class="question" id="q3" style="display:none;">
+        Aj firse bakchodi shuru kaarte hai. <span class="heart">😂</span>
+        <div class="btn-group">
+          <button onclick="showLovePercentage(true)">Yes</button>
+          <button onclick="showLovePercentage(false)">No</button>
+        </div>
+      </div>
+    </div>
+    <div id="love-percentage"></div>
+  </div>
+  <script>
+    let current = 1;
+    let score = 0;
+    function nextQuestion(answer) {
+      if(answer) score++;
+      document.getElementById('q' + current).style.display = 'none';
+      current++;
+      document.getElementById('q' + current).style.display = 'block';
     }
-
-    function startCelebration() {
-      document.getElementById('popup').style.display = 'none';
-      const countdownBox = document.getElementById('countdownBox');
-      const countdown = document.getElementById('countdown');
-      countdownBox.style.display = 'block';
-
-      let value = 0;
-      const interval = setInterval(() => {
-        value += Math.floor(Math.random() * 10 + 5);
-        if (value >= 78) {
-          value = 78;
-          clearInterval(interval);
-          showFinal();
-        }
-        countdown.textContent = value + '%';
-      }, 100);
+    function showLovePercentage(answer) {
+      if(answer) score++;
+      document.getElementById('q' + current).style.display = 'none';
+      let percent = Math.floor((score / 3) * 100);
+      let msg = percent === 100 ? "Mere bare me sochke soyi na? 😋" :
+                percent >= 67 ? "Kya soch rhi thi bol bol? 🙄" :
+                percent >= 34 ? "Nahi soyi na dhang se? 😒" :
+                "Pasand nhi aya kya? 😔";
+      document.getElementById('love-percentage').innerHTML =
+        `Friendship Percentage: <span class="heart">😏</span> <b>${percent}%</b><br>${msg}`;
+      document.getElementById('love-percentage').style.display = 'block';
     }
-
-    function showFinal() {
-      setTimeout(() => {
-        document.getElementById('countdownBox').style.display = 'none';
-        document.getElementById('cakeBox').style.display = 'block';
-        setTimeout(() => {
-          document.getElementById('congratsBox').style.display = 'block';
-          document.getElementById('ribbons').style.display = 'block';
-        }, 1500);
-      }, 1000);
-    }
-  </script></body>
-</html>
+  </script>
